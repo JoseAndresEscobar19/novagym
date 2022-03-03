@@ -2,13 +2,11 @@ from rest_framework import routers
 from seguridad.viewsets import *
 from django.urls import path
 from knox import views as knox_views
-
 """
  APIS Gym
 """
 neymatex_api = routers.DefaultRouter()
 neymatex_api.register(r'usuarios', DetallesView, 'usuario')
-
 """
  APIS Seguridad
 """
