@@ -54,6 +54,12 @@
           {%endif%}
         </td>
         <td>
+          <div class="d-inline">
+            <div class="float-left">
+              <a class="btn btn-sm btn-warning" href="{%url 'notificaciones:notificacionGlobal' notificacion.id%}"><i
+                class="fas fa-bullhorn "></i></a>
+            </div>
+            <div >
           <a href="{%url 'notificaciones:update' notificacion.id%}" class="btn btn-sm btn-primary">
             <i class="fas fa-edit "></i></a>
 
@@ -68,8 +74,8 @@
           <a class="btn btn-sm btn-danger use-modal" data-toggle='modal' data-target="#mainModal"
             data-url="{%url 'notificaciones:eliminar' notificacion.id%}" href="#">
             <i class="fas fa-times "></i></a>
-
-
+        </div>
+</div>
         </td>
       </tr>
       {% endfor %}

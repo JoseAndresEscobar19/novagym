@@ -17,6 +17,7 @@ from django.contrib import messages
 import json
 from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView, UpdateView
+from push_notifications.models import APNSDevice, GCMDevice
 # Create your views here.
 #SPONSOR
 
@@ -108,4 +109,26 @@ def ChangeState(request,pk):
         query.activo=0
         messages.success(request, "Notificación deshabilitada.")
     query.save()
+    return redirect('notificaciones:listar')
+
+def registrarDispositivo(id_registro,usuario):
+    try:
+        dispositivo = GCMDevice.objects.get(registration_id=id_registro)
+        dispositivo.user = usuario
+        dispositivo.save()
+    except:
+        dispositivo=GCMDevice.objects.create(registration_id=id_registro, cloud_message_type="FCM",user=usuario, active=True)
+
+def enviarNotificacionGlobal(request,id_notificacion):
+    notificacion=Notificacion.objects.get(id=id_notificacion)
+    dispositivos=GCMDevice.objects.all()
+    for dispositivo in dispositivos:
+        dispositivo.send_message(notificacion.cuerpo,extra={"title" : notificacion.titulo,"image":notificacion.imagen})
+    messages.success(request, "Notificación enviada a todos los usuarios.")
+    return redirect('notificaciones:listar')
+
+def enviarNotificacionIndividual(request,id_notificacion,usuario):
+    notificacion=Notificacion.objects.get(id=id_notificacion)
+    dispositivos=GCMDevice.objects.filter(user=usuario).send_message(notificacion.cuerpo,extra={"title" : notificacion.titulo,"image":notificacion.imagen})
+    messages.success(request, "Notificación enviada al usuario "+usuario+".")
     return redirect('notificaciones:listar')

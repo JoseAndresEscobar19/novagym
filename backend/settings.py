@@ -202,7 +202,7 @@ EMAIL_USE_TLS=False
 #EMAIL_USE_SSL=False
 
 PUSH_NOTIFICATIONS_SETTINGS = {
-        "FCM_API_KEY": "AAAAczUB-mk:APA91bF3vJva0ZbYH3dUZU4311DwRbq4l_31i4RXsLy0AztGxJpm2x-kSHmxVK8whKJKJcJ4L2UUE5gKFYO9PxDihK9xgwza6tpyXEUADV9qXvSFVl6qniMNi_fdscvKMFy0ErJ96ccM",
+        "FCM_API_KEY": " a key",
 }
 
 SOUTH_MIGRATION_MODULES = {"push_notifications": "push_notifications.south_migrations"}
