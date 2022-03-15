@@ -134,3 +134,6 @@ dmypy.json
 media/
 .vscode/
 *.pdf
+
+# FCM key
+backend/*firebase-adminsdk*.json

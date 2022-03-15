@@ -11,13 +11,17 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-from firebase_admin import initialize_app
 
 import environ
+from firebase_admin import credentials, initialize_app
 
 # Load Env file for multiple envs
 env = environ.Env()
 environ.Env.read_env()
+
+# Firebase Admin SDK. Used in Push notification
+cred = credentials.Certificate(env('FCM_CREDENTIALS'))
+initialize_app(cred)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -49,8 +53,7 @@ INSTALLED_APPS = [
     'django_filters',
     'knox',
     'crispy_forms',
-    'fcm_django',
-    #APPS
+    # APPS
     'seguridad',
     'novagym',
     'gimnasio',
@@ -144,15 +147,9 @@ else:
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    # },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    # },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
@@ -180,7 +177,6 @@ FORMAT_MODULE_PATH = 'backend.formats'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    Path.joinpath(BASE_DIR, "staticfiles"),
     Path.joinpath(BASE_DIR, "static"),
 ]
 STATIC_ROOT = Path.joinpath(BASE_DIR, "static_root")
@@ -196,19 +192,19 @@ MEDIA_ROOT = Path.joinpath(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#Email settings
+# Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST="smtp.gmail.com"
-EMAIL_PORT="587"
-EMAIL_HOST_USER=env("E_MAIL")
-EMAIL_HOST_PASSWORD=env("E_MAIL_PASS")
-EMAIL_USE_TLS=True
-EMAIL_USE_SSL=False
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = "587"
+EMAIL_HOST_USER = env("E_MAIL")
+EMAIL_HOST_PASSWORD = env("E_MAIL_PASS")
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
 
-#Push notifications settings
+# Push notifications settings. For multiple apps check https://github.com/jazzband/django-push-notifications/wiki/Multiple-Application-Support
+# We are using FCM for both iOS and Android
 PUSH_NOTIFICATIONS_SETTINGS = {
-        "FCM_API_KEY": "a key",
+    "FCM_API_KEY": env('FCM_API_KEY'),
+    "UPDATE_ON_DUPLICATE_REG_ID": True
 }
-
-SOUTH_MIGRATION_MODULES = {"push_notifications": "push_notifications.south_migrations"}
