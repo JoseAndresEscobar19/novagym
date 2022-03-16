@@ -31,7 +31,7 @@ APP_PERMISSIONS = {
     'productos': {'label': 'Productos', 'app': 'productos', 'model': 'producto'},
     # 'contactenos':'',
     'sponsor': {'label': 'Negocios Afiliados', 'app': 'sponsor', 'model': 'sponsor'},
-    # 'comunidad': {'model': 'publicacion', 'label': ''},
+    'notificaciones': {'label': 'Notificaciones', 'app': 'notificaciones', 'model': 'notificacion'},
 }  # TODO: agregar apps:model
 
 

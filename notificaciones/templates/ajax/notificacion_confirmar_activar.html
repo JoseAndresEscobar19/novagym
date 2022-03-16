@@ -1,14 +1,13 @@
 <div class="modal-header">
-  <h5 class="modal-title" id="ordenTitle">Deshabilitar notificación</h5>
+  <h5 class="modal-title" id="ordenTitle">Habilitar notificación</h5>
   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <form method="POST" action="{%url 'notificaciones:change' notificacion.id%}">
   {% csrf_token %}
-
   <div class="modal-body">
-    ¿Desea deshabilitar la siguiente notificación?
+    ¿Desea habilitar la siguiente notificación?
     <div class="row">
       <div class="col-3">
         Título
@@ -30,13 +29,13 @@
         Imagen
       </div>
       <div class="col">
-        <img src="{{notificacion.imagen.url}}" alt="" class="img-thumbnail w-50">
+        <img src="{{notificacion.imagen.url}}" alt="" class="img-thumbnail">
       </div>
     </div>
   </div>
   </div>
   <div class="modal-footer">
     <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-    <button class="btn btn-danger mr-3" type="submit"> Deshabilitar </button>
+    <button class="btn btn-danger mr-3" type="submit"> Habilitar </button>
   </div>
 </form>

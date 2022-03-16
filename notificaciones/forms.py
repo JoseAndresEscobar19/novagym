@@ -1,20 +1,24 @@
 from crispy_forms.helper import FormHelper
-from django import forms
-from .models import *
 from crispy_forms.layout import Column, Div, Field, Layout, Row
-from .widgets import DateTimePickerInput
+from django import forms
+
+from .models import *
+
 
 class NotificacionForm(forms.ModelForm):
     class Meta:
-        model= Notificacion
-        fields = ('titulo','cuerpo', 'imagen',"fecha_hora_inicio","fecha_hora_fin","frecuencia")
-
-        widgets = {
-            "imagen": forms.ClearableFileInput(),
-            "cuerpo":forms.Textarea(attrs={'rows':4, 'cols':15}),
-            "fecha_hora_inicio":DateTimePickerInput(),
-            "fecha_hora_fin":DateTimePickerInput(),
+        model = Notificacion
+        fields = ('titulo', 'cuerpo', 'imagen', "fecha_inicio",
+                  "fecha_fin", "frecuencia")
+        labels = {
+            'titulo': 'Título',
+            'fecha_inicio': 'Fecha de inicio',
+            'fecha_fin': 'Fecha de fin'
         }
+        widgets = {
+            "cuerpo": forms.Textarea(attrs={'rows': 4, 'cols': 15}),
+        }
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -22,13 +26,17 @@ class NotificacionForm(forms.ModelForm):
         self.helper.form_tag = False
         self.helper.layout = Layout(
             Row(
-                Column('titulo', css_class='col-6'),
-                Column('imagen', css_class='col-6'),
-                Column('cuerpo', css_class='col-6'),
-            ),
-            Row(
-                Column('fecha_hora_inicio', css_class='col-6'),
-                Column('fecha_hora_fin', css_class='col-6'),
-                Column('frecuencia', css_class='col-6'),
+                Column(
+                    Row(
+                        Column('titulo', css_class='col-12'),
+                        Column('cuerpo', css_class='col-12'),
+                        Column('imagen', css_class='col-12'),
+                    ), css_class='col-12 col-lg-6'),
+                Column(
+                    Row(
+                        Column('fecha_inicio', css_class='col-6'),
+                        Column('fecha_fin', css_class='col-6'),
+                        Column('frecuencia', css_class='col-12'),
+                    ), css_class='col-12 col-lg-6'),
             ),
         )

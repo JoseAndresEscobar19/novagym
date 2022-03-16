@@ -37,7 +37,7 @@
         {% for usuario in page_obj %}
         <tr>
           <td scope="row">
-            {% if usuario.imagen and usuario.imagen.path %}
+            {% if usuario.imagen and usuario.imagen.url %}
             <img src="{{usuario.imagen.url}}" alt="{{usuario.nombres}}" class="table__image">
             {%else%}
             <img src="{% static 'images/generic_user.png' %}" alt="{{usuario.nombres}}" class="table__image">
