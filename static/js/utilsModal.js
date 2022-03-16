@@ -44,6 +44,7 @@ function openModelWithContext(event) {
     url: url,
     success: function (data) {
       $(target + ' .modal-content').html(data);
+      $(target).modal('show');
     },
   });
 

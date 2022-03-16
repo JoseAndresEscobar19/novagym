@@ -1,37 +1,27 @@
 <div class="modal-header">
-  <h5 class="modal-title" id="ordenTitle">Eliminar gimnasio</h5>
+  <h5 class="modal-title" id="ordenTitle">Habilitar notificación</h5>
   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-{% csrf_token %}
-<form method="POST" action="{% url 'gimnasio:eliminar' gimnasio.id %}">
+<form method="POST" action="{%url 'notificaciones:change' notificacion.id%}">
   {% csrf_token %}
-
   <div class="modal-body">
-    ¿Desea eliminar el siguiente gimnasio?
+    ¿Desea habilitar la siguiente notificación?
     <div class="row">
       <div class="col-3">
-        Nombre
+        Título
       </div>
       <div class="col">
-        {{gimnasio.nombre}}
+        {{notificacion.titulo}}
       </div>
     </div>
     <div class="row">
       <div class="col-3">
-        Ciudad
+        Frecuencia
       </div>
       <div class="col">
-        {{gimnasio.ciudad}}
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-3">
-        Ubicación
-      </div>
-      <div class="col">
-        {{gimnasio.ubicacion}}
+        {{notificacion.get_frecuencia_display}}
       </div>
     </div>
     <div class="row">
@@ -39,13 +29,13 @@
         Imagen
       </div>
       <div class="col">
-        <img src="/media/{{gimnasio.imagen}}" style="width: 100px;height: 100px;" alt="">
+        <img src="{{notificacion.imagen.url}}" alt="" class="img-thumbnail">
       </div>
     </div>
   </div>
   </div>
   <div class="modal-footer">
     <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-    <button id="anular" class="btn btn-danger mr-3" type="submit"> Eliminar </button>
+    <button class="btn btn-danger mr-3" type="submit"> Habilitar </button>
   </div>
 </form>

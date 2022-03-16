@@ -3,30 +3,13 @@
   <nav class="navbar navbar-expand-md navbar-light fixed-top navbar">
     <div class="navbar__logo d-flex align-items-center justify-content-center px-2 px-xl-5">
       <img src="{% static 'images/logo.png' %}" alt="logo" class="">
+      <button class="navbar-toggler bg-white" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
     </div>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
+    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
-        {% comment %}
-        {% if perms.novagym.view_producto %}
-        <li class="nav-item {% if request.resolver_match.namespace == 'novagym:producto' %}active{% endif %}">
-          <a class="nav-link" href="{% url 'novagym:producto:listar' %}">Productos</a>
-        </li>
-        {% endif %}
-        {% if perms.novagym.view_orden %}
-        <li class="nav-item {% if request.resolver_match.namespace == 'novagym:orden' %}active{% endif %}">
-          <a class="nav-link" href="{% url 'novagym:orden:listar' %}">Pedidos</a>
-        </li>
-        {% endif %}
-        {% if perms.novagym.view_notificacion %}
-        <li class="nav-item {% if request.resolver_match.namespace == 'novagym:notificacion' %}active{% endif %}">
-          <a class="nav-link" href="{% url 'novagym:notificacion:listar' %}">Notificaciones</a>
-        </li>
-        {% endif %}
-        {% endcomment %}
       </ul>
       {% if user.is_authenticated %}
       <div class="mr-4">

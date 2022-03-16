@@ -2,10 +2,16 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
+{% block specific_head %}
+<link rel="stylesheet" href="{% static 'css/external/bootstrap4-toggle.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/external/daterangepicker.css' %}">
+<link rel="stylesheet" href="{% static 'css/list.css' %}">
+{% endblock specific_head %}
+
 {% block main %}
 <div class="row mt-4">
   <div class="col">
-    <h2 class="text-left">NOTIFICACIONES</h2>
+    <h2 class="text-left">{{title|upper}}</h2>
   </div>
   <div class="col">
     <a href="{% url 'notificaciones:crear' %}" class="btn btn-primary float-right" style="margin-right: 2%;">Agregar
@@ -14,68 +20,43 @@
   <hr>
 </div>
 <div class="row mt-4">
-  <div class="col-12">
-    <form method="get">
-      {% include "export_records.html" %}
-    </form>
-  </div>
   <div class="col-12 table-container">
-    <table class="table table-responsive-lg table-condensed table-hover text-left" id="tabla-sponsor">
-      <tr>
-        <th scope="col">Imagen</th>
-        <th scope="col">Título</th>
-        <th scope="col">Cuerpo</th>
-        <th scope="col">Horarios</th>
-        <th scope="col">Frecuencia</th>
-        <th scope="col">Estado</th>
-        <th scope="col">Acciones</th>
-      </tr>
+    <table class="table table-responsive-lg table-hover" id="tabla-notificacion">
       {% if page_obj %}
       {% for notificacion in page_obj %}
       <tr>
-        <td><img style="width: 150px; height: 150px;" src="/media/{{notificacion.imagen}}" alt=""></td>
         <td>
-          {{ notificacion.titulo }}
-        </td>
-        <td>
-          {{ notificacion.cuerpo }}
-        </td>
-        <td>
-          {{ notificacion.fecha_hora_inicio }} - {{ notificacion.fecha_hora_fin }}
-        </td>
-        <td>
-          {{ notificacion.frecuencia }}
-        </td>
-        <td>
-          {%if notificacion.activo %}
-          <span class="text-success">Activo</span>
+          {% if notificacion.imagen and notificacion.imagen.url %}
+          <img src="{{notificacion.imagen.url}}" alt="{{notificacion.titulo}}" class="table__image">
           {%else%}
-          <span class="text-danger">Inactivo</span>
-          {%endif%}
+          <img src="{% static 'images/generic_notificacion.png' %}" alt="{{notificacion.titulo}}" class="table__image">
+          {% endif %}
         </td>
         <td>
-          <div class="d-inline">
-            <div class="float-left">
-              <a class="btn btn-sm btn-warning" href="{%url 'notificaciones:notificacionGlobal' notificacion.id%}"><i
-                class="fas fa-bullhorn "></i></a>
-            </div>
-            <div >
-          <a href="{%url 'notificaciones:update' notificacion.id%}" class="btn btn-sm btn-primary">
-            <i class="fas fa-edit "></i></a>
-
-
-          {% if notificacion.activo %}
-          <a class="btn btn-sm btn-success" href="{%url 'notificaciones:change' notificacion.id%}"><i
-              class="fas fa-power-off "></i></a>
-          {% else %}
-          <a class="btn btn-sm btn-warning" href="{%url 'notificaciones:change' notificacion.id%}"><i
-              class="fas fa-power-off "></i></a>
-          {% endif %}
-          <a class="btn btn-sm btn-danger use-modal" data-toggle='modal' data-target="#mainModal"
-            data-url="{%url 'notificaciones:eliminar' notificacion.id%}" href="#">
-            <i class="fas fa-times "></i></a>
-        </div>
-</div>
+          <p><b>Frecuencia</b></p>
+          <p>{{ notificacion.get_frecuencia_display }}</p>
+          <p><b>Fecha de creación</b></p>
+          <p>{{notificacion.created_at}}</p>
+        </td>
+        <td>
+          <p><b>Título:</b></p>
+          <p>{{ notificacion.titulo|truncatechars:50 }}</p>
+          <p><b>Descripción:</b></p>
+          <p>{{ notificacion.cuerpo|truncatechars:50}}</p>
+        </td>
+        <td>
+          <a class="btn btn-primary" href="{%url 'notificaciones:notificacionGlobal' notificacion.id%}">
+            Enviar ahora <i class="fas fa-bullhorn "></i>
+          </a>
+          <a href="{%url 'notificaciones:update' notificacion.id%}" class="btn btn-primary">
+            Editar <i class="fas fa-edit "></i></a>
+        </td>
+        <td>
+          <input type="checkbox" {%if notificacion.activo%}checked{%endif%} class="use-modal" data-toggle="toggle"
+            data-type="checkbox" data-on="Habilitado" data-off="Deshabilitado" data-onstyle="success"
+            data-offstyle="danger" data-target="#mainModal"
+            data-url-activar="{%url 'notificaciones:change' notificacion.pk%}"
+            data-url-eliminar="{%url 'notificaciones:change' notificacion.pk%}">
         </td>
       </tr>
       {% endfor %}
@@ -91,18 +72,6 @@
 {% endblock main %}
 
 {% block specific_scripts %}
-<script type="text/javascript" src="{% static 'js/moment.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/daterangepicker.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/bootstrap4-toggle.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/utilsDates.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/utilsModal2.js' %}"></script>
-<script>
-  $(".export").click(function () {
-    $("#export").val($(this).data('value'));
-    $('form').submit()
-  });
-  $('button[type="submit"]').click(function (e) {
-    $("#export").val('');
-  })
-</script>
+<script type="text/javascript" src="{% static 'js/utilsModal.js' %}"></script>
 {% endblock %}
