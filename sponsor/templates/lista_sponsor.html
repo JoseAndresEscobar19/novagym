@@ -35,8 +35,7 @@
           <th scope="col">Descripción</th>
           <th scope="col">Contacto</th>
           <th scope="col">URL</th>
-          <th scope="col">Fecha inicio</th>
-          <th scope="col">Fecha fin</th>
+          <th scope="col">Periodo</th>
           <th scope="col">Activo</th>
           <th scope="col">Acciones</th>
         </tr>
@@ -51,8 +50,7 @@
           <td>{{sponsor.descripcion}}</td>
           <td>{{sponsor.nombre_contacto}}: {{sponsor.telefono}}</td>
           <td>{{sponsor.url}}</td>
-          <td>{{sponsor.fecha_inicio}}</td>
-          <td>{{sponsor.fecha_fin}}</td>
+          <td>{{sponsor.fecha_inicio}} - {{sponsor.fecha_fin}}</td>
           <td>
             {%if sponsor.activo == 0 and sponsor.compararFechas %}
             <span class="text-warning">Inactivo</span>

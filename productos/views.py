@@ -256,13 +256,14 @@ class ListarCategoria(FilterView):
         return super().get(request, *args, **kwargs)
 
 class ListarProductos(FilterView):
-    paginate_by = 20
+    paginate_by = 10
     max_pages_render = 10
-    model = Producto
-    context_object_name = 'producto'
+    model = Inventario
+    context_object_name = 'inventario'
     template_name = "lista_productos.html"
     permission_required = 'novagym.view_empleado'
     filterset_class=ProductoFilter
+    queryset=Inventario.objects.filter(usaNovacoins=0)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = "Productos"
@@ -272,8 +273,6 @@ class ListarProductos(FilterView):
         #producto = Producto.objects.all()
         #combo= zip(inventario,producto)
         #context['combo'] = combo
-        inventario = Inventario.objects.filter(usaNovacoins=0)
-        context['combo'] = inventario
         return context
         
     def post(self, request, *args, **kwargs):
@@ -283,13 +282,14 @@ class ListarProductos(FilterView):
         return super().get(request, *args, **kwargs)
 
 class ListarProductosNC(FilterView):
-    paginate_by = 20
+    paginate_by = 10
     max_pages_render = 10
-    model = Producto
-    context_object_name = 'producto'
+    model = Inventario
+    context_object_name = 'inventario'
     template_name = "lista_productos.html"
     permission_required = 'novagym.view_empleado'
     filterset_class=ProductoFilter
+    queryset=Inventario.objects.filter(usaNovacoins=1)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = "Productos"

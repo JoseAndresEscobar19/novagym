@@ -79,7 +79,7 @@ class SendMail(APIView):
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ShowBuzon(FilterView):
-    paginate_by = 20
+    paginate_by = 10
     max_pages_render = 10
     model = Buzon
     exclude = ['imagen']
@@ -120,7 +120,7 @@ class ShowBuzonNoLeidos(FilterView):
         return super().get(request, *args, **kwargs)
 
 class ShowBuzonLeidos(FilterView):
-    paginate_by = 20
+    paginate_by = 9
     max_pages_render = 10
     model = Buzon
     exclude = ['imagen']

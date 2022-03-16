@@ -67,7 +67,7 @@ def createSponsor(request):
     return render(request,'createSponsor.html',{'form':form})
 
 class ListarSponsors(FilterView):
-    paginate_by = 20
+    paginate_by = 10
     max_pages_render = 10
     model = Sponsor
     context_object_name = 'sponsor'

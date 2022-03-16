@@ -31,7 +31,7 @@
 
     <div class="row">
       <table id="mailTable" class="table table-hover">
-        {% csrf_token %}
+        <tbody>
         {% if page_obj %}
         {% for mail in page_obj %}
 
@@ -80,6 +80,7 @@
           No se han recibido correos.
         </h4>
         {% endif %}
+      </tbody>
       </table>
       {% include "pagination.html" %}
     </div>
